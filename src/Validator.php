@@ -275,6 +275,16 @@ class Validator extends DKIM
                     ];
                     continue;
                 }
+
+                if (!isset($publicKey['p']) || $publicKey['p'] === '') {
+                    $output[$signatureIndex][] = [
+                        'status' => 'PERMFAIL',
+                        'reason' => 'Public key missing or empty (p= tag not found)' .
+                            " ({$dkimTags['d']}/{$dkimTags['s']} key #$keyIndex)",
+                    ];
+                    continue;
+                }
+
                 // Validate the signature
                 $validationResult = self::validateSignature(
                     $publicKey['p'],
