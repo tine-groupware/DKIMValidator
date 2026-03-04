@@ -26,7 +26,7 @@ class Validator extends DKIM
 
         // Only return true in this case
         return (count($res) === 1)
-            && (count($res[0]) === 1)
+            && (count($res[0] ?? []) === 1)
             && ($res[0][0]['status'] === 'SUCCESS');
     }
 
