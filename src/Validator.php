@@ -180,7 +180,7 @@ class Validator extends DKIM
             [$qType, $qFormat] = explode('/', $dkimTags['q'], 2);
             if ($qType . '/' . $qFormat === 'dns/txt') {
                 $dnsKeys = self::fetchPublicKeys($dkimTags['d'], $dkimTags['s']);
-                if ($dnsKeys === false) {
+                if ($dnsKeys === false || count($dnsKeys) === 0) {
                     $output[$signatureIndex][] = [
                         'status' => 'TEMPFAIL',
                         'reason' => 'Public key not found in DNS',
